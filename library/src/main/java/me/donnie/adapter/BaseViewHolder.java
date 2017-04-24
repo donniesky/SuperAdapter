@@ -1,4 +1,4 @@
-package me.donnie.superadapter;
+package me.donnie.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

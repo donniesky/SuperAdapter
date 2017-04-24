@@ -1,8 +1,9 @@
-package me.donnie.superadapter.delegate;
+package me.donnie.adapter.delegate;
 
 import android.support.v4.util.SparseArrayCompat;
 
-import me.donnie.superadapter.BaseViewHolder;
+import me.donnie.adapter.BaseViewHolder;
+
 
 /**
  * @author donnieSky

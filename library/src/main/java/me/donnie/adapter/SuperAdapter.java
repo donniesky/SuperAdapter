@@ -1,8 +1,9 @@
-package me.donnie.superadapter;
+package me.donnie.adapter;
 
 import java.util.List;
 
-import me.donnie.superadapter.delegate.ItemViewDelegate;
+import me.donnie.adapter.delegate.ItemViewDelegate;
+
 
 /**
  * @author donnieSky

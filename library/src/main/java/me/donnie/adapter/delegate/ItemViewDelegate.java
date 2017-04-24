@@ -1,6 +1,7 @@
-package me.donnie.superadapter.delegate;
+package me.donnie.adapter.delegate;
 
-import me.donnie.superadapter.BaseViewHolder;
+
+import me.donnie.adapter.BaseViewHolder;
 
 /**
  * @author donnieSky

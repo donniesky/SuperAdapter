@@ -1,4 +1,4 @@
-package me.donnie.superadapter;
+package me.donnie.adapter;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
@@ -14,8 +14,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.donnie.superadapter.delegate.ItemViewDelegate;
-import me.donnie.superadapter.delegate.ItemViewDelegateManager;
+import me.donnie.adapter.delegate.ItemViewDelegate;
+import me.donnie.adapter.delegate.ItemViewDelegateManager;
+
 
 /**
  * @author donnieSky
@@ -94,7 +95,7 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
         mContext = parent.getContext();
         this.mInflater = LayoutInflater.from(mContext);
         ItemViewDelegate itemViewDelegate = mItemViewDelegateManager.getItemViewDelegate(viewType);
-        K holder =  (K)K.createBaseViewHolder(mContext, parent, itemViewDelegate.getItemViewLayoutId());
+        K holder =  (K) K.createBaseViewHolder(mContext, parent, itemViewDelegate.getItemViewLayoutId());
         bindViewClickListener(holder);
         return holder;
     }
