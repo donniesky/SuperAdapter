@@ -1,19 +1,30 @@
 package me.donnie.adapter;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.donnie.adapter.animation.AlphaInAnimation;
+import me.donnie.adapter.animation.BaseAnimation;
+import me.donnie.adapter.animation.ScaleInAnimation;
+import me.donnie.adapter.animation.SlideInBottomAnimation;
+import me.donnie.adapter.animation.SlideInLeftAnimation;
 import me.donnie.adapter.delegate.ItemViewDelegate;
 import me.donnie.adapter.delegate.ItemViewDelegateManager;
 
@@ -36,8 +47,6 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
 
     public static final int SLIDEIN_LEFT = 0x00000004;
 
-    public static final int SLIDEIN_RIGHT = 0x00000005;
-
     public static final int HEADER_VIEW = 0x00000111;
     public static final int LOADING_VIEW = 0x00000222;
     public static final int FOOTER_VIEW = 0x00000333;
@@ -48,7 +57,17 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
     private OnItemLongClickListener mOnItemLongClickListener;
     private OnItemChildLongClickListener mOnItemChildLongClickListener;
 
-    @IntDef({ALPHAIN, SCALEIN, SLIDEIN_BOTTOM, SLIDEIN_LEFT, SLIDEIN_RIGHT})
+    private boolean mAnimEnable = false;
+
+    private int mLastPosition = -1;
+    private Interpolator mInterpolator = new LinearInterpolator();
+    private int mDuration = 300;
+
+    private BaseAnimation mCustomAnimation;
+    private BaseAnimation mSelectAnimation = new AlphaInAnimation();
+
+
+    @IntDef({ALPHAIN, SCALEIN, SLIDEIN_BOTTOM, SLIDEIN_LEFT})
     @Retention(RetentionPolicy.SOURCE)
     public @interface AnimationType {}
 
@@ -60,10 +79,27 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
     protected LayoutInflater mInflater;
     protected List<T> mDatas;
 
+    public void addNewData(@Nullable List<T> datas) {
+        this.mDatas = datas == null ? new ArrayList<T>() : datas;
+        mLastPosition = -1;
+        notifyDataSetChanged();
+    }
+
+    public void addData(@NonNull T data) {
+        mDatas.add(data);
+        notifyItemInserted(mDatas.size());
+    }
+
     public void addData(List<T> datas) {
         this.mDatas = datas == null ? new ArrayList<T>() : datas;
         mDatas.addAll(datas);
-        notifyItemInserted(mDatas.size() - 1);
+        notifyItemRangeInserted(mDatas.size() - datas.size(), datas.size());
+    }
+
+    public void remove(@IntRange(from = 0) int position, @NonNull T data) {
+        mDatas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mDatas.size() - position);
     }
 
     public void clear() {
@@ -77,6 +113,40 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
 
     public T getItem(@IntRange(from = 0) int position) {
         return mDatas.get(position);
+    }
+
+    public void enableAnim() {
+        this.mAnimEnable = true;
+    }
+
+    public void enableAnim(BaseAnimation animation) {
+        this.mAnimEnable = true;
+        this.mCustomAnimation = animation;
+    }
+
+    public void enableAnim(@AnimationType int type) {
+        this.mAnimEnable = true;
+        mCustomAnimation = null;
+        switch (type) {
+            case ALPHAIN:
+                mSelectAnimation = new AlphaInAnimation();
+                break;
+            case SCALEIN:
+                mSelectAnimation = new ScaleInAnimation();
+                break;
+            case SLIDEIN_BOTTOM:
+                mSelectAnimation = new SlideInBottomAnimation();
+                break;
+            case SLIDEIN_LEFT:
+                mSelectAnimation = new SlideInLeftAnimation();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void setDuration(int duration) {
+        mDuration = duration;
     }
 
     public MultiItemAdapter(List<T> datas) {
@@ -108,6 +178,47 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
     @Override
     public int getItemCount() {
         return mDatas.size();
+    }
+
+    @Override
+    public void onViewAttachedToWindow(K holder) {
+        super.onViewAttachedToWindow(holder);
+        int viewType = holder.getItemViewType();
+        if (viewType == EMPTY_VIEW || viewType == HEADER_VIEW || viewType == FOOTER_VIEW
+                || viewType == LOADING_VIEW) {
+            setFullSpan(holder);
+        } else {
+
+        }
+    }
+
+    protected void setFullSpan(RecyclerView.ViewHolder holder) {
+        if (holder.itemView.getLayoutParams() instanceof StaggeredGridLayoutManager.LayoutParams) {
+            StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+            params.setFullSpan(true);
+        }
+    }
+
+    private void addAnimation(RecyclerView.ViewHolder holder) {
+        if (mAnimEnable) {
+            if (holder.getLayoutPosition() > mLastPosition) {
+                BaseAnimation animation = null;
+                if (mCustomAnimation != null) {
+                    animation = mCustomAnimation;
+                } else {
+                    animation = mSelectAnimation;
+                }
+                for (Animator animator : animation.getAnimators(holder.itemView)) {
+                    startAnim(animator, holder.getLayoutPosition());
+                }
+                mLastPosition = holder.getLayoutPosition();
+            }
+        }
+    }
+
+    protected void startAnim(Animator animator, int position) {
+        animator.setDuration(mDuration).start();
+        animator.setInterpolator(mInterpolator);
     }
 
     public void convert(K holder, T t) {
