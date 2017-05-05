@@ -43,3 +43,8 @@ Walle wrapper = Walle.newBuilder()
                 .loadMoreViewRes(R.layout.view_loadmore)
                 .build();
 ```
+
+### Thanks
+* baseAdapter [hongyangAndroid/baseAdapter](https://github.com/hongyangAndroid/baseAdapter)
+* BaseRecyclerViewAdapterHelper [CymChad/BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
+* 更优雅的方式添加 Header 与 Footer [优雅的添加Header和Footer等](http://www.woaitqs.cc/android/2017/04/11/new-way-to-add-header-and-footer)
