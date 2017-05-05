@@ -8,7 +8,7 @@
 
 with gradle
 ```GRADLE
-compile 'com.github.donniesky:walle:0.0.1'
+compile 'com.github.donniesky:Walle:0.1.0'
 ```
 
 Assuming you have installed jitpack provider:
