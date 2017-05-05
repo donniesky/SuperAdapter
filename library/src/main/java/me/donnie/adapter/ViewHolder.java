@@ -26,13 +26,13 @@ import android.widget.TextView;
  * @description
  */
 
-public class BaseViewHolder extends RecyclerView.ViewHolder {
+public class ViewHolder extends RecyclerView.ViewHolder {
 
     private SparseArray<View> mViews;
     private View mConvertView;
     private Context mContext;
 
-    public BaseViewHolder(Context context, View itemView)
+    public ViewHolder(Context context, View itemView)
     {
         super(itemView);
         mContext = context;
@@ -40,19 +40,18 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         mViews = new SparseArray<View>();
     }
 
-
-    public static BaseViewHolder createBaseViewHolder(Context context, View itemView)
+    public static ViewHolder createBaseViewHolder(Context context, View itemView)
     {
-        BaseViewHolder holder = new BaseViewHolder(context, itemView);
+        ViewHolder holder = new ViewHolder(context, itemView);
         return holder;
     }
 
-    public static BaseViewHolder createBaseViewHolder(Context context,
-                                              ViewGroup parent, int layoutId)
+    public static ViewHolder createBaseViewHolder(Context context,
+                                                  ViewGroup parent, int layoutId)
     {
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
-        BaseViewHolder holder = new BaseViewHolder(context, itemView);
+        ViewHolder holder = new ViewHolder(context, itemView);
         return holder;
     }
 
@@ -90,56 +89,56 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
      * @param text
      * @return
      */
-    public BaseViewHolder setText(int viewId, String text)
+    public ViewHolder setText(int viewId, String text)
     {
         TextView tv = getView(viewId);
         tv.setText(text);
         return this;
     }
 
-    public BaseViewHolder setImageResource(int viewId, int resId)
+    public ViewHolder setImageResource(int viewId, int resId)
     {
         ImageView view = getView(viewId);
         view.setImageResource(resId);
         return this;
     }
 
-    public BaseViewHolder setImageBitmap(int viewId, Bitmap bitmap)
+    public ViewHolder setImageBitmap(int viewId, Bitmap bitmap)
     {
         ImageView view = getView(viewId);
         view.setImageBitmap(bitmap);
         return this;
     }
 
-    public BaseViewHolder setImageDrawable(int viewId, Drawable drawable)
+    public ViewHolder setImageDrawable(int viewId, Drawable drawable)
     {
         ImageView view = getView(viewId);
         view.setImageDrawable(drawable);
         return this;
     }
 
-    public BaseViewHolder setBackgroundColor(int viewId, int color)
+    public ViewHolder setBackgroundColor(int viewId, int color)
     {
         View view = getView(viewId);
         view.setBackgroundColor(color);
         return this;
     }
 
-    public BaseViewHolder setBackgroundRes(int viewId, int backgroundRes)
+    public ViewHolder setBackgroundRes(int viewId, int backgroundRes)
     {
         View view = getView(viewId);
         view.setBackgroundResource(backgroundRes);
         return this;
     }
 
-    public BaseViewHolder setTextColor(int viewId, int textColor)
+    public ViewHolder setTextColor(int viewId, int textColor)
     {
         TextView view = getView(viewId);
         view.setTextColor(textColor);
         return this;
     }
 
-    public BaseViewHolder setTextColorRes(int viewId, int textColorRes)
+    public ViewHolder setTextColorRes(int viewId, int textColorRes)
     {
         TextView view = getView(viewId);
         view.setTextColor(mContext.getResources().getColor(textColorRes));
@@ -147,7 +146,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     @SuppressLint("NewApi")
-    public BaseViewHolder setAlpha(int viewId, float value)
+    public ViewHolder setAlpha(int viewId, float value)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
@@ -163,21 +162,21 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setVisible(int viewId, boolean visible)
+    public ViewHolder setVisible(int viewId, boolean visible)
     {
         View view = getView(viewId);
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
-    public BaseViewHolder linkify(int viewId)
+    public ViewHolder linkify(int viewId)
     {
         TextView view = getView(viewId);
         Linkify.addLinks(view, Linkify.ALL);
         return this;
     }
 
-    public BaseViewHolder setTypeface(Typeface typeface, int... viewIds)
+    public ViewHolder setTypeface(Typeface typeface, int... viewIds)
     {
         for (int viewId : viewIds)
         {
@@ -188,14 +187,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setProgress(int viewId, int progress)
+    public ViewHolder setProgress(int viewId, int progress)
     {
         ProgressBar view = getView(viewId);
         view.setProgress(progress);
         return this;
     }
 
-    public BaseViewHolder setProgress(int viewId, int progress, int max)
+    public ViewHolder setProgress(int viewId, int progress, int max)
     {
         ProgressBar view = getView(viewId);
         view.setMax(max);
@@ -203,21 +202,21 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setMax(int viewId, int max)
+    public ViewHolder setMax(int viewId, int max)
     {
         ProgressBar view = getView(viewId);
         view.setMax(max);
         return this;
     }
 
-    public BaseViewHolder setRating(int viewId, float rating)
+    public ViewHolder setRating(int viewId, float rating)
     {
         RatingBar view = getView(viewId);
         view.setRating(rating);
         return this;
     }
 
-    public BaseViewHolder setRating(int viewId, float rating, int max)
+    public ViewHolder setRating(int viewId, float rating, int max)
     {
         RatingBar view = getView(viewId);
         view.setMax(max);
@@ -225,21 +224,21 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setTag(int viewId, Object tag)
+    public ViewHolder setTag(int viewId, Object tag)
     {
         View view = getView(viewId);
         view.setTag(tag);
         return this;
     }
 
-    public BaseViewHolder setTag(int viewId, int key, Object tag)
+    public ViewHolder setTag(int viewId, int key, Object tag)
     {
         View view = getView(viewId);
         view.setTag(key, tag);
         return this;
     }
 
-    public BaseViewHolder setChecked(int viewId, boolean checked)
+    public ViewHolder setChecked(int viewId, boolean checked)
     {
         Checkable view = (Checkable) getView(viewId);
         view.setChecked(checked);
@@ -249,7 +248,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     /**
      * 关于事件的
      */
-    public BaseViewHolder setOnClickListener(int viewId,
+    public ViewHolder setOnClickListener(int viewId,
                                          View.OnClickListener listener)
     {
         View view = getView(viewId);
@@ -257,7 +256,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setOnTouchListener(int viewId,
+    public ViewHolder setOnTouchListener(int viewId,
                                          View.OnTouchListener listener)
     {
         View view = getView(viewId);
@@ -265,7 +264,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setOnLongClickListener(int viewId,
+    public ViewHolder setOnLongClickListener(int viewId,
                                              View.OnLongClickListener listener)
     {
         View view = getView(viewId);

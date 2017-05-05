@@ -1,7 +1,7 @@
 package me.donnie.adapter.delegate;
 
 
-import me.donnie.adapter.BaseViewHolder;
+import me.donnie.adapter.ViewHolder;
 
 /**
  * @author donnieSky
@@ -15,6 +15,6 @@ public interface ItemViewDelegate<T> {
 
     boolean isForViewType(T item, int position);
 
-    void convert(BaseViewHolder holder, T t, int position);
+    void convert(ViewHolder holder, T t, int position);
 
 }

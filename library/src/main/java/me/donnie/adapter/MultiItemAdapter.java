@@ -8,7 +8,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ import me.donnie.adapter.delegate.ItemViewDelegateManager;
  * @description
  */
 
-public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends RecyclerView.Adapter<K> {
+public abstract class MultiItemAdapter<T, K extends ViewHolder> extends RecyclerView.Adapter<K> {
 
     private static final String TAG = MultiItemAdapter.class.getSimpleName();
 
@@ -47,10 +46,10 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
 
     public static final int SLIDEIN_LEFT = 0x00000004;
 
-    public static final int HEADER_VIEW = 0x00000111;
+    /*public static final int HEADER_VIEW = 0x00000111;
     public static final int LOADING_VIEW = 0x00000222;
     public static final int FOOTER_VIEW = 0x00000333;
-    public static final int EMPTY_VIEW = 0x00000555;
+    public static final int EMPTY_VIEW = 0x00000555;*/
 
     private OnItemClickListener mOnItemClickListener;
     private OnItemChildClickListener mOnItemChildClickListener;
@@ -172,31 +171,12 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
 
     @Override
     public void onBindViewHolder(K holder, int position) {
-        convert(holder, mDatas.get(holder.getLayoutPosition()));
+        convert(holder, mDatas.get(position));
     }
 
     @Override
     public int getItemCount() {
         return mDatas.size();
-    }
-
-    @Override
-    public void onViewAttachedToWindow(K holder) {
-        super.onViewAttachedToWindow(holder);
-        int viewType = holder.getItemViewType();
-        if (viewType == EMPTY_VIEW || viewType == HEADER_VIEW || viewType == FOOTER_VIEW
-                || viewType == LOADING_VIEW) {
-            setFullSpan(holder);
-        } else {
-
-        }
-    }
-
-    protected void setFullSpan(RecyclerView.ViewHolder holder) {
-        if (holder.itemView.getLayoutParams() instanceof StaggeredGridLayoutManager.LayoutParams) {
-            StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-            params.setFullSpan(true);
-        }
     }
 
     private void addAnimation(RecyclerView.ViewHolder holder) {
@@ -239,7 +219,7 @@ public abstract class MultiItemAdapter<T, K extends BaseViewHolder> extends Recy
         return this;
     }
 
-    private void bindViewClickListener(final BaseViewHolder holder) {
+    private void bindViewClickListener(final ViewHolder holder) {
         if (holder == null) {
             return;
         }

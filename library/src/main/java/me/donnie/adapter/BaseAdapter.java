@@ -11,11 +11,9 @@ import me.donnie.adapter.delegate.ItemViewDelegate;
  * @description
  */
 
-public abstract class SuperAdapter<T> extends MultiItemAdapter<T, BaseViewHolder> {
+public abstract class BaseAdapter<T> extends MultiItemAdapter<T, ViewHolder> {
 
-    protected int mLayoutResId;
-
-    public SuperAdapter(final int layoutResId, List<T> datas) {
+    public BaseAdapter(final int layoutResId, List<T> datas) {
         super(datas);
         this.mLayoutResId = layoutResId;
 
@@ -31,11 +29,11 @@ public abstract class SuperAdapter<T> extends MultiItemAdapter<T, BaseViewHolder
             }
 
             @Override
-            public void convert(BaseViewHolder holder, T t, int position) {
-                SuperAdapter.this.convert(holder, t, position);
+            public void convert(ViewHolder holder, T t, int position) {
+                BaseAdapter.this.convert(holder, t, position);
             }
         });
     }
 
-    protected abstract void convert(BaseViewHolder holder, T t, int position);
+    protected abstract void convert(ViewHolder holder, T t, int position);
 }

@@ -2,7 +2,7 @@ package me.donnie.adapter.delegate;
 
 import android.support.v4.util.SparseArrayCompat;
 
-import me.donnie.adapter.BaseViewHolder;
+import me.donnie.adapter.ViewHolder;
 
 
 /**
@@ -69,7 +69,7 @@ public class ItemViewDelegateManager<T> {
         + position + " in data source");
     }
 
-    public void convert(BaseViewHolder holder, T item, int position) {
+    public void convert(ViewHolder holder, T item, int position) {
         int delegatesCount = delegates.size();
         for (int i = 0; i < delegatesCount; i++) {
             ItemViewDelegate<T> delegate = delegates.valueAt(i);
