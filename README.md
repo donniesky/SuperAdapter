@@ -1,4 +1,4 @@
-# Walle <img alt="Walle is an android library" src="https://www.cleveroad.com/public/comercial/label-android.svg" height="19"> [![minSdk for Walle](https://img.shields.io/badge/minSdk-15-green.svg)](#)
+# Walle <img alt="Walle is an android library" src="https://www.cleveroad.com/public/comercial/label-android.svg" height="19"> [![minSdk for Walle](https://img.shields.io/badge/minSdk-14-green.svg)](#)
 
 ## This is Walle - Recyclerview.Adapter's helper
 
