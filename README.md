@@ -1,4 +1,4 @@
-# Walle <img alt="Walle is an android library" src="https://www.cleveroad.com/public/comercial/label-android.svg" height="19"> [![minSdk for Walle](https://img.shields.io/badge/minSdk-14-green.svg)](#)
+# Walle [![](https://jitpack.io/v/donniesky/Walle.svg)](https://jitpack.io/#donniesky/Walle)
 
 ## This is Walle - Recyclerview.Adapter's helper
 
@@ -8,7 +8,7 @@
 
 with gradle
 ```GRADLE
-compile 'com.github.donniesky:Walle:0.1.0'
+compile 'com.github.donniesky:Walle:0.1.1'
 ```
 
 Assuming you have installed jitpack provider:
