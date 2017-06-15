@@ -11,7 +11,7 @@ import me.donnie.adapter.delegate.ItemViewDelegate;
  * @description
  */
 
-public abstract class BaseAdapter<T> extends MultiItemAdapter<T, ViewHolder> {
+public abstract class BaseAdapter<T> extends MultiItemAdapter<T> {
 
     public BaseAdapter(final int layoutResId, List<T> datas) {
         super(datas);

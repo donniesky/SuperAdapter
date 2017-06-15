@@ -146,6 +146,10 @@ public class Walle {
         return wrapperAdapter;
     }
 
+    public void addTo(RecyclerView recyclerView) {
+        recyclerView.setAdapter(wrapperAdapter);
+    }
+
     private class WrapperAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private static final int VIEW_TYPE_EMPTY = 1;

@@ -34,7 +34,7 @@ import me.donnie.adapter.delegate.ItemViewDelegateManager;
  * @description
  */
 
-public abstract class MultiItemAdapter<T, K extends ViewHolder> extends RecyclerView.Adapter<K> {
+public abstract class MultiItemAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     private static final String TAG = MultiItemAdapter.class.getSimpleName();
 
@@ -160,17 +160,17 @@ public abstract class MultiItemAdapter<T, K extends ViewHolder> extends Recycler
     }
 
     @Override
-    public K onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         this.mInflater = LayoutInflater.from(mContext);
         ItemViewDelegate itemViewDelegate = mItemViewDelegateManager.getItemViewDelegate(viewType);
-        K holder =  (K) K.createBaseViewHolder(mContext, parent, itemViewDelegate.getItemViewLayoutId());
+        ViewHolder holder =  ViewHolder.createBaseViewHolder(mContext, parent, itemViewDelegate.getItemViewLayoutId());
         bindViewClickListener(holder);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(K holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         convert(holder, mDatas.get(position));
     }
 
@@ -201,7 +201,7 @@ public abstract class MultiItemAdapter<T, K extends ViewHolder> extends Recycler
         animator.setInterpolator(mInterpolator);
     }
 
-    public void convert(K holder, T t) {
+    public void convert(ViewHolder holder, T t) {
         mItemViewDelegateManager.convert(holder, t, holder.getAdapterPosition());
     }
 
